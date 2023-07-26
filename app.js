@@ -47,7 +47,10 @@ function readAllFilenames(directoryPath) {
                     if(!fs.existsSync("result")) {
                         fs.mkdirSync("result")
                     }
-                    fs.writeFile("result/"+fileName, fileContent, 'utf8', (err) => {
+                    if(!fs.existsSync("result/"+directoryPath)) {
+                        fs.mkdirSync("result/"+directoryPath)
+                    }
+                    fs.writeFile("result/"+directoryPath+"/"+fileName, fileContent, 'utf8', (err) => {
                         if (err) {
                             console.error('写入文件出错: ', err);
                             return;
@@ -60,10 +63,8 @@ function readAllFilenames(directoryPath) {
         });
     });
 }
-// 指定要读取的目录路径
-const directoryPath = 'cloudflare';
 
 // 调用函数读取文件名
-readAllFilenames(directoryPath);
-
+readAllFilenames('cloudflare');
+readAllFilenames('cloudfront');
 
